@@ -13,9 +13,11 @@
 (loop [x3 3 x5 5 sigma 0 ] (if-not (or (< x3 1000) (< x5 1000)) sigma (cond (> x3 x5)  (recur x3 (+ x5 5) (+ sigma x5)) (= x3 x5) (recur (+ x3 3) (+ x5 5) (+ sigma x3)) (< x3 x5)
 (recur (+ x3 3) x5 (+ sigma x3))))))
 
+;; Problem # 2
 (defn fibnacci-sum-even-num<n [n] 
   (loop [[a b c] [0 1 0]] (if (> b n) c (recur [b (+ a b) (if (even? b) (+ c b) c)]))))
 
+;; Problem # 3
 (defn prime? [n] (not (reduce #(or %1 (zero? (mod n %2))) (concat '(false) (range (int (Math/sqrt n)) 1 -1)))))
 
 (defn largest-prime-factor-bad [n] (loop [x (int (Math/sqrt n))] (if (and (zero? (mod n x)) (prime? x)) x (recur (dec x))))) 
