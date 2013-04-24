@@ -23,6 +23,16 @@
 (defn largest-prime-factor-bad [n] (loop [x (int (Math/sqrt n))] (if (and (zero? (mod n x)) (prime? x)) x (recur (dec x))))) 
 ;(int  (Math/sqrt 600851475143))
 
+;; Problem # 4
+(defn palindrome? [number] (let [ind-digits (fn [number] (loop [x [] number number] (if (zero? number) x (recur (cons (mod number 10) x) (int (/ number 10)))))) digits (ind-digits number)]  (= (reverse digits) digits)))
+
+(defn three? [number x] (and (zero? (mod number x)) (>= 999 x 100)))
+
+(defn three-dig-factors? [number] (loop [x (int (Math/sqrt number)) y (int (/ number x)) ](if (> x 999) false (if (and (three? number x) (three? number y)) true (recur (inc x) (int (/ number (inc x))))))))
+
+
+(defn find-largest-palin [] (loop [x (* 999 999)] (if-not (and (palindrome? x) (three-dig-factors? x)) (if (> x 10000) (recur (dec x)) 0) x)))
+
 
 
 
