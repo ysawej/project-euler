@@ -34,6 +34,15 @@
 (defn find-largest-palin [] (loop [x (* 999 999)] (if-not (and (palindrome? x) (three-dig-factors? x)) (if (> x 10000) (recur (dec x)) 0) x)))
 
 
+;; Problem # 5
+(defn gcd [a b] (if (< a 1) b (recur (mod b a) a)))
+(defn lcm [a b] (int (/ (* a b) (gcd a b))))
+(defn lcm-1->20 [] (reduce lcm (range 20 1 -1)))
+
+
+
+
+
 
 
 (defn main []
