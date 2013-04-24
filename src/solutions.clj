@@ -9,6 +9,10 @@
   (reduce + 
     (filter #(> 1000 %) (distinct (concat (multiples 3) (multiples 5)))))))
 
+(defn sum-3&5*<1000 []
+(loop [x3 3 x5 5 sigma 0 ] (if-not (or (< x3 1000) (< x5 1000)) sigma (cond (> x3 x5)  (recur x3 (+ x5 5) (+ sigma x5)) (= x3 x5) (recur (+ x3 3) (+ x5 5) (+ sigma x3)) (< x3 x5)
+(recur (+ x3 3) x5 (+ sigma x3))))))
+
 (defn fibnacci-sum-even-num<n [n] 
   (loop [[a b c] [0 1 0]] (if (> b n) c (recur [b (+ a b) (if (even? b) (+ c b) c)]))))
 
@@ -21,8 +25,9 @@
 
 
 (defn main []
+	(println (sum-multiples-3-5<1000) " " (sum-3&5*<1000)))
 ;	(println (map #(do (println % " " (prime? %))) (range 100))))
- (println (largest-prime-factor-bad 600851475143)))
+; (println (largest-prime-factor-bad 600851475143)))
 
 (main)
 
