@@ -44,11 +44,25 @@
 (- (apply * (repeat 2 (reduce + (range 101))))
 (reduce + (map #(* % %) (range 101))))
 
+; Problem # 7
+(defn sieve-primes [n] 
+(let [arr (vec (repeat n true)) ];mymap (java.util.HashMap. {:N 1 :prime 2}) ] 
+(loop [x 2 sieve arr i 0]
+(if-not (< (* x x) n) sieve (if-not (sieve i) (recur (inc x) sieve (inc i)) (recur (inc x) (apply assoc sieve (interleave (range (+ i x) n x) (repeat false))) (inc i)))))))
 
+(defn last-prime [n] (let [sieve (sieve-primes n)] 
+(loop [cnt 0 x 0 prime 2] (if (>= cnt n) [x prime] (if (sieve cnt) (recur (inc cnt) (inc x) (+ cnt 2)) (recur (inc cnt) x prime) )))))
 
+(defn mth-prime [n m] (let [sieve (sieve-primes n)] 
+(loop [cnt 0 x 0 prime 1] (if (or (>= x m) (>= cnt n)) [x prime] (if (sieve cnt) (recur (inc cnt) (inc x) (+ cnt 2)) (recur (inc cnt) x prime) )))))
 
 (defn main []
-	(println (sum-multiples-3-5<1000) " " (sum-3&5*<1000)))
+	(println "1000000 primes" (last-prime 1000000))
+	(println "1000000 primes, 10001 prime " (mth-prime 1000000 10001))
+	(println "100000 primes, 10001 prime " (mth-prime 100000 10001))
+	(println "110000 primes, 10001 prime " (mth-prime 110000 10001))
+	(println "110000 primes, 10001 prime " (mth-prime 110000 6)))
+;	(println (sum-multiples-3-5<1000) " " (sum-3&5*<1000)))
 ;	(println (map #(do (println % " " (prime? %))) (range 100))))
 ; (println (largest-prime-factor-bad 600851475143)))
 
