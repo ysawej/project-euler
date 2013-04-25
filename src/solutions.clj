@@ -40,7 +40,9 @@
 (defn lcm-1->20 [] (reduce lcm (range 20 1 -1)))
 
 
-
+; Problem # 6
+(- (apply * (repeat 2 (reduce + (range 101))))
+(reduce + (map #(* % %) (range 101))))
 
 
 
