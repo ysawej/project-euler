@@ -57,10 +57,11 @@
 (loop [cnt 0 x 0 prime 1] (if (or (>= x m) (>= cnt n)) [x prime] (if (sieve cnt) (recur (inc cnt) (inc x) (+ cnt 2)) (recur (inc cnt) x prime) )))))
 
 (defn main []
+	(time (println "110000 primes, 10001 prime " (mth-prime 110000 10001)))
 	(println "1000000 primes" (last-prime 1000000))
 	(println "1000000 primes, 10001 prime " (mth-prime 1000000 10001))
 	(println "100000 primes, 10001 prime " (mth-prime 100000 10001))
-	(println "110000 primes, 10001 prime " (mth-prime 110000 10001))
+	(time (println "110000 primes, 10001 prime " (mth-prime 110000 10001)))
 	(println "110000 primes, 10001 prime " (mth-prime 110000 6)))
 ;	(println (sum-multiples-3-5<1000) " " (sum-3&5*<1000)))
 ;	(println (map #(do (println % " " (prime? %))) (range 100))))
