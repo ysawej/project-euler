@@ -56,6 +56,36 @@
 (defn mth-prime [n m] (let [sieve (sieve-primes n)] 
 (loop [cnt 0 x 0 prime 1] (if (or (>= x m) (>= cnt n)) [x prime] (if (sieve cnt) (recur (inc cnt) (inc x) (+ cnt 2)) (recur (inc cnt) x prime) )))))
 
+;; Problem # 8
+
+(def hel "<sequence of digits>")
+ (require '[clojure.string])
+(apply max (map (comp #(apply * %) (partial map #(- (int %) (int \0)))) (partition 5 1 (clojure.string/replace hel #"\n" ""))))
+
+;; Problem # 9
+(defn pyth-1k-sum? [b] (let [ b b a (int (/ (- 500000 (* 1000 b)) (- 1000 b))) c (- 1000 a b)] (and (every? pos? [a b c]) (= (* c c) (+ (* a a) (* b b))))))
+
+( let [doublet (filter pyth-1k-sum? (range 1 667)) triplet (conj doublet (- 1000 (apply + doublet)))] (apply * triplet))
+
+;; Problem # 10
+(defn sum-primes [n] (let [sieve (sieve-primes n)] (loop [sum 0 index 0] (if (>= index (- n 2)) sum (if (sieve index) (recur (+ sum index 2) (inc index)) (recur sum (inc index)))))))
+
+(sum-primes 2000000)
+
+;; Problem # 11
+
+(require '[clojure.string :as string])
+(def t20 (vec (map #(vec (map (fn [n] (Integer/parseInt n)) (string/split % #" "))) (string/split t20str #"\n"))))
+
+(defn find-max-4-prod-in-grid [t20] (let [n (count t20)] (reduce max (for [x (range n) y (range n)] 
+  (max 
+    (apply * (take 4 (drop x (t20 y)))) 
+    (apply * (map #(nth % x 1) (take 4 (drop y t20))))
+    (apply * (map #(nth (nth t20 (+ y %) []) (+ x %) 1) (range 4)))
+    (apply * (map #(nth (nth t20 (- y %) []) (+ x %) 1) (range 4)))
+)))))
+
+
 (defn main []
 	(time (println "110000 primes, 10001 prime " (mth-prime 110000 10001)))
 	(println "1000000 primes" (last-prime 1000000))
