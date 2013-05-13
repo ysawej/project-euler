@@ -181,6 +181,69 @@
          (+ (reduce + (map (comp str-arr-to-num first) (map #(partition 10 %) (clojure.string/split nums #"\s"))))
             (rshift-10-digs (reduce + (map (comp str-arr-to-num second) (map #(partition 10 %) (clojure.string/split nums #"\s")))))))
 
+; Problem # 14
+(defn Collatz-fn [n] (if (odd? n) (inc (* 3 n)) (/ n 2)))
+(defn collatz-series-len [n] (loop [size 1 n n] (if (= n 1) size (recur (inc size) (Collatz-fn n)))))
+
+(time (println "The answer to problem 14 is" (reduce #(if (> (second %1) (second %2)) %1 %2) (map #(vec [ % (collatz-series-len %)]) (range 1 1000001)))))
+
+; Problem # 15
+(time (println "The answer to problem 15 is " (reduce #(* %1 (first %2) (/ 1 (second %2))) 1 (partition 2 (interleave (range 40 20 -1) (range 20 0 -1))))))
+
+
+; Problem # 16
+
+(defn doubles-digit-arr [mydigseq] 
+    (loop [myseq [] carry 0 toprocess mydigseq] 
+            (if (and (empty? toprocess) (zero? carry))
+                      myseq 
+                      (let [dig (nth toprocess 0 0) newdig (+ (* dig 2) carry)] 
+                                (recur (conj myseq (mod newdig 10) ) (int (/ newdig 10)) (rest toprocess))))))
+
+;(println (double-dig-arr '(1)))
+;(println (double-dig-arr '(8)))
+;(println (double-dig-arr (double-dig-arr '(8))))
+
+;(println (loop [init-seq '(1) iter 0] (if (< iter 10) (recur (double-dig-arr init-seq) (inc iter)) init-seq)))
+;(println (loop [init-seq '(1) iter 0] (if (< iter 1000) (recur (double-dig-arr init-seq) (inc iter)) init-seq)))
+(println "The answer to problem 16 is " (reduce + (loop [init-seq '(1) iter 0] (if (< iter 1000) (recur (doubles-digit-arr init-seq) (inc iter)) init-seq))))
+
+
+;; Problem # 17
+
+(def single-digs '(3 3 5 4 4 3 5 5 4))
+(def ten-to-teens '(3 6 6 8 8 7 7 9 8 8))
+(def twenty-90 '(6 6 5 5 5 7 6 6))
+
+(def total 
+    (+
+       (* 10 (reduce + (map #(reduce + %) [(map #(* 9 %) single-digs) ten-to-teens (map #(* 10 %) twenty-90)])))
+       (+ (* 99 (reduce + (map #(+ 7 3 %) single-digs))) (reduce + (map #(+ 7 %) single-digs)))
+       (+ 3 8)))
+
+(println "The answer to problem 17 is  " total)
+
+
+;; Problem # 18
+
+(defn parseTriangleNumbers [filename] (map #(map (fn [a] (Integer/parseInt a)) %) (map #(clojure.string/split % #"\s") (clojure.string/split (slurp filename) #"\n"))))
+(defn max-sum-triangle [triangle] 
+  (let [toadd (fn [myseq] (partition 2 1 (concat [0] myseq [0])))]
+    (loop [tolist (second triangle) fromlst (toadd (first triangle)) moretogo (rest (rest triangle))]
+      (if (empty? moretogo)
+      (map #(+ %1 (apply max %2)) tolist fromlst)
+      (recur 
+        (first moretogo) 
+        (toadd (map #(+ %1 (apply max %2)) tolist fromlst))
+        (rest moretogo))))))
+
+(println "The answer to problem 18 is " (apply max (max-sum-triangle (parseTriangleNumbers "data/problem18"))))
+
+;; Problem # 67
+(println "The answer to problem 18 is " (apply max (max-sum-triangle (parseTriangleNumbers "data/problem67"))))
+
+
+;;;;;
 
 (defn main []
 ;        (nth-trinum-factors-count 12375))
