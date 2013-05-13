@@ -194,11 +194,14 @@
 ; Problem # 16
 
 (defn doubles-digit-arr [mydigseq] 
-    (loop [myseq [] carry 0 toprocess mydigseq] 
-            (if (and (empty? toprocess) (zero? carry))
-                      myseq 
-                      (let [dig (nth toprocess 0 0) newdig (+ (* dig 2) carry)] 
-                                (recur (conj myseq (mod newdig 10) ) (int (/ newdig 10)) (rest toprocess))))))
+  (loop [myseq [] carry 0 toprocess mydigseq] 
+    (if (and (empty? toprocess) (zero? carry)) 
+      myseq 
+      (let [dig (nth toprocess 0 0) newdig (+ (* dig 2) carry)] 
+        (recur 
+          (conj myseq (mod newdig 10)) 
+          (int (/ newdig 10)) 
+          (rest toprocess))))))
 
 ;(println (double-dig-arr '(1)))
 ;(println (double-dig-arr '(8)))
