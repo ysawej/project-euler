@@ -243,7 +243,7 @@
 (println "The answer to problem 18 is " (apply max (max-sum-triangle (parseTriangleNumbers "data/problem18"))))
 
 ;; Problem # 67
-(println "The answer to problem 18 is " (apply max (max-sum-triangle (parseTriangleNumbers "data/problem67"))))
+(println "The answer to problem 67 is " (apply max (max-sum-triangle (parseTriangleNumbers "data/problem67"))))
 
 
 ;;;;;
