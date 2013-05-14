@@ -246,6 +246,27 @@
 
 (println "The answer to problem 18 is " (apply max (max-sum-triangle (parseTriangleNumbers "data/problem18"))))
 
+;; Problem # 19
+
+(defn days-in-month
+      ([indx] (days-in-month indx 1)) 
+      ([indx year] 
+              (cond 
+                                 (#{4 6 9 11} indx) 30  
+                             (#{1 3 5 7 8 10 12} indx) 31  
+                             (and (zero? (mod year 4)) (or (pos? (mod year 100)) (zero? (mod year 400)))) 29  
+                             :default 28)))
+(println "The answer to problem 19 is " 
+         (loop [sun-months 0 mon 1 year 1901 weekday 2] 
+           (if (and (>= mon 1) (>= year 2001)) 
+             sun-months 
+             (recur 
+               (if (zero? weekday) (inc sun-months) sun-months) 
+               (-> mon (mod 12) inc) 
+               (if (= mon 12) (inc year) year) 
+               (mod (+ weekday (days-in-month mon year)) 7)))))
+
+
 ;; Problem # 20
 
 (println "The answer to problem 20 is " 
