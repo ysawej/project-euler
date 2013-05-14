@@ -193,15 +193,18 @@
 
 ; Problem # 16
 
-(defn doubles-digit-arr [mydigseq] 
-  (loop [myseq [] carry 0 toprocess mydigseq] 
-    (if (and (empty? toprocess) (zero? carry)) 
-      myseq 
-      (let [dig (nth toprocess 0 0) newdig (+ (* dig 2) carry)] 
-        (recur 
-          (conj myseq (mod newdig 10)) 
-          (int (/ newdig 10)) 
+
+(defn digit-arr-times [mydigseq times]
+  (loop [myseq [] carry 0 toprocess mydigseq]
+    (if (and (empty? toprocess) (zero? carry))
+      myseq
+      (let [dig (nth toprocess 0 0) newdig (+ (* dig times) carry)]
+        (recur
+          (conj myseq (mod newdig 10))
+          (int (/ newdig 10))
           (rest toprocess))))))
+
+(defn doubles-digit-arr [mydigseq] (digit-arr-times mydigseq 2))
 
 ;(println (double-dig-arr '(1)))
 ;(println (double-dig-arr '(8)))
@@ -209,7 +212,8 @@
 
 ;(println (loop [init-seq '(1) iter 0] (if (< iter 10) (recur (double-dig-arr init-seq) (inc iter)) init-seq)))
 ;(println (loop [init-seq '(1) iter 0] (if (< iter 1000) (recur (double-dig-arr init-seq) (inc iter)) init-seq)))
-(println "The answer to problem 16 is " (reduce + (loop [init-seq '(1) iter 0] (if (< iter 1000) (recur (doubles-digit-arr init-seq) (inc iter)) init-seq))))
+(println "The answer to problem 16 is " 
+         (reduce + (loop [init-seq '(1) iter 0] (if (< iter 1000) (recur (doubles-digit-arr init-seq) (inc iter)) init-seq))))
 
 
 ;; Problem # 17
@@ -241,6 +245,14 @@
         (rest moretogo))))))
 
 (println "The answer to problem 18 is " (apply max (max-sum-triangle (parseTriangleNumbers "data/problem18"))))
+
+;; Problem # 20
+
+(println "The answer to problem 20 is " 
+         (reduce + (loop [init-seq '(1) tocompute (range 1 101)] 
+                     (if-not (empty? tocompute) 
+                       (recur (digit-arr-times init-seq (first tocompute)) (rest tocompute)) 
+                       init-seq))))
 
 ;; Problem # 67
 (println "The answer to problem 67 is " (apply max (max-sum-triangle (parseTriangleNumbers "data/problem67"))))
