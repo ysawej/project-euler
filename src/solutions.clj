@@ -275,6 +275,45 @@
                        (recur (digit-arr-times init-seq (first tocompute)) (rest tocompute)) 
                        init-seq))))
 
+
+
+;; Problem # 21
+
+(defn modfact [x y] ; x ('() sum) y dividend 
+  (let [x1 (vec (first x)) x2 (second x)]
+    [(conj x1 (mod x2 y) ) (int (/ x2 y))]))
+
+(comment 
+(defn factors-sum [n]  
+  (let [prime-facs (prime-factors n)]
+    (loop [sum 0 pow-set (power-set-enumerate (keys prime-facs))] 
+      (if-let [fst (first pow-set)] 
+        (if (empty? fst) (recur (inc sum) (rest pow-set)) 
+          (recur (+ sum (reduce * (map #(prime-facs %) fst))) (rest pow-set))) 
+        sum))))
+)
+
+;; Convenience function for use with reduce takes an list of empty-list-and-a-number, and dividend, 
+;; (adds the remainder to the list, and sets the number to the quotient)
+;; (modfact ['() 23] 5]) will return ['(3) 4]
+;; So a reduce like: (reduce modfact ['() 29] [2 3 5]) will return the the individual components from [2 3 5] for a count 29 (assuming < 2*3*5)
+;(defn modfact [x y] ; x ('() sum) y dividend 
+;    [(cons (mod (second x) y) (first x)) (int (/ (second x) y))])
+(defn atleast-1-from-each [factors repeats] 
+    (map #(reduce * (mapcat repeat %1 %2)) (map  #(map inc (first (reduce modfact ['() %] repeats))) (range (reduce * repeats))) (repeat factors)))
+
+(defn all-factors [n]
+  (let [primes-fac (prime-factors n)
+        factorss (power-set-enumerate (keys primes-fac))]
+    (mapcat #(atleast-1-from-each % (map primes-fac %)) factorss)))
+
+(defn amicable? [n] (let [m (reduce + (cons (- n) (all-factors n))) m2 (reduce + (cons (- m) (all-factors m)))] (and (= m2 n) (not (= m m2)) (<= m2 10000))))
+(println "The answer to problem 21 is " (dec (reduce + (filter amicable? (range 1 10000)))))
+
+;; Problem # 22
+
+(println "The answer to problem 22 is " (reduce + (map #(* (first %) (reduce + (map (fn [a] (inc (- (int a) (int \A)))) (second %)))) (map-indexed #(vec [(inc %1) %2]) (sort (clojure.string/split (clojure.string/replace (slurp "data/names.txt") #"\"" "") #","))))) )
+
 ;; Problem # 67
 (println "The answer to problem 67 is " (apply max (max-sum-triangle (parseTriangleNumbers "data/problem67"))))
 
