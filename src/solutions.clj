@@ -318,6 +318,13 @@
 (println "The answer to problem 67 is " (apply max (max-sum-triangle (parseTriangleNumbers "data/problem67"))))
 
 
+;; Problem # 30
+(range 10)
+(defn to-digits [n] (cons (mod n 10) (let [k (int (/ n 10))] (if-not (zero? k) (lazy-seq (to-digits k))))))
+
+(def numbers-with-sum-of-fifth-powers-of-individual-digits (filter (fn [a1] (= (reduce + (map #(nth (map (fn [x] (apply * (repeat 5 x))) (range 10)) %) (take 10 (to-digits a1)))) a1)) (range 2 1000000)))
+
+
 ;;;;;
 
 (defn main []
@@ -339,6 +346,8 @@
 	(println (sum-multiples-3-5<1000) " " (sum-3&5*<1000))
 	(println (map #(do (println % " " (prime? %))) (range 100)))
  (println (largest-prime-factor-bad 600851475143)))
+
+
 
 (main)
 
