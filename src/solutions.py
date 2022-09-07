@@ -52,7 +52,8 @@ def circular_primes(n:int)-> Set[int]:
 nums = np.random.random_integers(1,100,20)
 #for i in nums:
 #    print(i, is_prime(i))
-print(circular_primes(3))
+print(circular_primes(7))
+print(len(circular_primes(7)))
 
 
 print(is_circular_prime([3,7]))
