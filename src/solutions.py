@@ -87,3 +87,23 @@ def trunc_primes(i:int):
 for i in range(1000000):
     if trunc_primes(i):
         print("yay found one ", i)
+
+# Problem 38
+def pandigital(strnum):
+    if len(strnum) != 9:
+        return False
+    for i in range(1,10):
+        if str(i) not in strnum:
+            return False
+    return True
+def find_pandig(i):
+    k = 1
+    res = ''
+    while len(res) < 9:
+        res = res + str(i*k)
+        k = k + 1
+    if pandigital(res):
+        print(res, i, k)
+
+for i in range(9999,9001, -1):
+    find_pandig(i)
