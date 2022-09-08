@@ -58,3 +58,8 @@ print(len(circular_primes(7)))
 
 print(is_circular_prime([3,7]))
 print(is_circular_prime([1,9]))
+
+# Problem 37
+# Truncatable prime
+# not correct yet
+# 313, 3137, 373, 53, 23, 73, 3797, 797, 379, 37, 317
