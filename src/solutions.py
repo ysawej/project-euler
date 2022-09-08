@@ -74,27 +74,16 @@ def trunc_primes(i:int):
             trunc_prime = True
             j = 0
             num = i
-            #print(num)
             while num // ten_powers[j] > 0:
-                #print(num % ten_powers[j], is_prime(num % ten_powers[j]), num // ten_powers[j], is_prime(num // ten_powers[j]), ten_powers[j], )
                 if ten_powers[j]>1 and not is_prime(num % ten_powers[j]):
                     trunc_prime = False
-                #print(trunc_prime)
                 if not is_prime(num // ten_powers[j]):
                     trunc_prime = False
-                #print(trunc_prime)
                 j = j+1
-            #print("---")
             if trunc_prime:
-                #print(i)
                 return True
             return False
 
 for i in range(1000000):
     if trunc_primes(i):
         print("yay found one ", i)
-
-# 19937, 19997, 13997, 1913, 1373, 3137, 3797, 197, 193, 173, 137, 113, 73, 53, 37, 23, 17, 13
-trunc_primes(19937)
-trunc_primes(19997)
-trunc_primes(13997)
