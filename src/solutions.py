@@ -107,3 +107,24 @@ def find_pandig(i):
 
 for i in range(9999,9001, -1):
     find_pandig(i)
+
+
+# Problem 39 // ans:840 16 triplets
+max_triples = 0
+max_i = 120
+for i in range(120, 1001):
+    start = i//3 +1
+    end = i-1
+    count = 0 
+    for a1 in range(start, end):
+        remaining = i - a1
+        for k in range(1, remaining):
+            a2 = k
+            a3 = remaining - k
+            if a1*a1 == a2*a2 + a3*a3:
+                count = count + 1
+                #print((a1+a2+a3), a1,a2, a3)
+    if count > 0 and max_triples < count:
+        max_triples = count
+        max_i = i
+        print(i, count)
