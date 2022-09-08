@@ -5,6 +5,8 @@ from typing import Set
 ten_powers = [10**i for i in range(100)]
 
 def is_prime(p: int)-> bool:
+    if p < 2:
+        return False
     for i in range(2,int(np.sqrt(p))+1):
         if p%i == 0:
             return False
@@ -62,4 +64,37 @@ print(is_circular_prime([1,9]))
 # Problem 37
 # Truncatable prime
 # not correct yet
-# 313, 3137, 373, 53, 23, 73, 3797, 797, 379, 37, 317
+# 313, 3137, 373, , 3797, 797, 379, 317
+# 23, 37, 53, 73, 313, 317, 373, 379, 797, 3137, 3797
+# sum([23, 37, 53, 73, 313, 317, 373, 797, 3137, 3797, 739397]) = 748317
+
+def trunc_primes(i:int):
+        trunc_prime = False
+        if (i%10==3 or i%10==7) and is_prime(i):
+            trunc_prime = True
+            j = 0
+            num = i
+            #print(num)
+            while num // ten_powers[j] > 0:
+                #print(num % ten_powers[j], is_prime(num % ten_powers[j]), num // ten_powers[j], is_prime(num // ten_powers[j]), ten_powers[j], )
+                if ten_powers[j]>1 and not is_prime(num % ten_powers[j]):
+                    trunc_prime = False
+                #print(trunc_prime)
+                if not is_prime(num // ten_powers[j]):
+                    trunc_prime = False
+                #print(trunc_prime)
+                j = j+1
+            #print("---")
+            if trunc_prime:
+                #print(i)
+                return True
+            return False
+
+for i in range(1000000):
+    if trunc_primes(i):
+        print("yay found one ", i)
+
+# 19937, 19997, 13997, 1913, 1373, 3137, 3797, 197, 193, 173, 137, 113, 73, 53, 37, 23, 17, 13
+trunc_primes(19937)
+trunc_primes(19997)
+trunc_primes(13997)
