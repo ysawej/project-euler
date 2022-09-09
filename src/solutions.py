@@ -48,18 +48,18 @@ def circular_primes(n:int)-> Set[int]:
                 j += 1
             cprimes.update(is_circular_prime(num))
     return cprimes
-            
+
+def solution35():
+    nums = np.random.random_integers(1,100,20)
+    #for i in nums:
+    #    print(i, is_prime(i))
+
+    print(circular_primes(7))
+    print(len(circular_primes(7)))
 
 
-nums = np.random.random_integers(1,100,20)
-#for i in nums:
-#    print(i, is_prime(i))
-print(circular_primes(7))
-print(len(circular_primes(7)))
-
-
-print(is_circular_prime([3,7]))
-print(is_circular_prime([1,9]))
+    print(is_circular_prime([3,7]))
+    print(is_circular_prime([1,9]))
 
 # Problem 37
 # Truncatable prime
@@ -83,10 +83,11 @@ def trunc_primes(i:int):
             if trunc_prime:
                 return True
             return False
-
-for i in range(1000000):
-    if trunc_primes(i):
-        print("yay found one ", i)
+            
+def solution37():
+    for i in range(1000000):
+        if trunc_primes(i):
+            print("yay found one ", i)
 
 # Problem 38
 def pandigital(strnum):
@@ -105,26 +106,76 @@ def find_pandig(i):
     if pandigital(res):
         print(res, i, k)
 
-for i in range(9999,9001, -1):
-    find_pandig(i)
+def solution38():
+    for i in range(9999,9001, -1):
+        find_pandig(i)
 
 
 # Problem 39 // ans:840 16 triplets
-max_triples = 0
-max_i = 120
-for i in range(120, 1001):
-    start = i//3 +1
-    end = i-1
-    count = 0 
-    for a1 in range(start, end):
-        remaining = i - a1
-        for k in range(1, remaining):
-            a2 = k
-            a3 = remaining - k
-            if a1*a1 == a2*a2 + a3*a3:
-                count = count + 1
-                #print((a1+a2+a3), a1,a2, a3)
-    if count > 0 and max_triples < count:
-        max_triples = count
-        max_i = i
-        print(i, count)
+def solution39():
+    max_triples = 0
+    max_i = 120
+    for i in range(120, 1001):
+        start = i//3 +1
+        end = i-1
+        count = 0 
+        for a1 in range(start, end):
+            remaining = i - a1
+            for k in range(1, remaining):
+                a2 = k
+                a3 = remaining - k
+                if a1*a1 == a2*a2 + a3*a3:
+                    count = count + 1
+                    #print((a1+a2+a3), a1,a2, a3)
+        if count > 0 and max_triples < count:
+            max_triples = count
+            max_i = i
+            print(i, count)
+
+
+
+# Problem 40
+def solution40():
+    n_dig_counts = [0, 9, 2*(100-10), 3*(1000-100), 4*(10000-1000), 5*(100000-10000), 6*(1000000-100000)]
+    n_dig_starts = [0, 9, 99, 999, 9999, 99999, 999999]
+    n_dig_digs = [1, 2, 3, 4, 5, 6, 7]
+    boundaries = np.cumsum(n_dig_counts)
+    print(boundaries)
+    #for d in range(188, 210):
+    #for d in range(2880, 2900):
+    ans=[]
+    for d in [1,10, 100, 1000, 10_000, 100_000, 1000_000]:
+        for i in range(1,len(boundaries)):
+            if d <= boundaries[i] and d > boundaries[i-1]:
+                
+                c = (d - boundaries[i-1])
+                #print (i,boundaries[i-1] , n_dig_starts[i-1], n_dig_digs[i-1],  c // n_dig_digs[i-1], c%n_dig_digs[i-1])
+                v_d = n_dig_starts[i-1] + (c // n_dig_digs[i-1])
+                r = c%n_dig_digs[i-1]
+                #print(d, c,v_d, r)
+                """print("d={}, i={}, boundary={}, start={}, digit={}, c = {},v_d = {}, r={},c/dig={}, c mod dig={} ".format(
+                    d,
+                    i,
+                    boundaries[i-1], 
+                    n_dig_starts[i-1], 
+                    n_dig_digs[i-1],
+                    c,
+                    v_d,
+                    r,
+                    c // n_dig_digs[i-1], 
+                    c%n_dig_digs[i-1]))"""
+                if r == 0:
+                    
+                    print(v_d % 10,end=" ")
+                    ans.append(v_d % 10)
+                else:
+                    #print("n_dig_starts[r], r",n_dig_starts[r], r)
+                    #print( "not last digit:",  ((v_d+1) // (n_dig_starts[n_dig_digs[i-1] - r]+1)) % 10,end=" ")
+                    print(((v_d+1) // (n_dig_starts[n_dig_digs[i-1] - r]+1)) % 10,end="")
+                    ans.append(((v_d+1) // (n_dig_starts[n_dig_digs[i-1] - r]+1)) % 10)
+    print("\nans, product=",ans, np.prod(ans))
+    # ans 210
+      
+    #print(boundaries)
+
+solution40()
