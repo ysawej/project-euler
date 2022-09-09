@@ -61,11 +61,21 @@ def solution35():
     print(is_circular_prime([3,7]))
     print(is_circular_prime([1,9]))
 
+# Problem 36
+def solution36():
+    res = []
+    for i in range(1024):
+        a = "{0:b}".format(i)
+        b = a[::-1]
+        val = int("0b"+a+b, 2)
+        a1 = str(val)
+        a2 = a1[::-1]
+        if a1==a2:
+            res.append(val)
+    print(res, np.sum(res))
+
 # Problem 37
 # Truncatable prime
-# not correct yet
-# 313, 3137, 373, , 3797, 797, 379, 317
-# 23, 37, 53, 73, 313, 317, 373, 379, 797, 3137, 3797
 # sum([23, 37, 53, 73, 313, 317, 373, 797, 3137, 3797, 739397]) = 748317
 
 def trunc_primes(i:int):
@@ -161,4 +171,4 @@ def solution40():
       
     #print(boundaries)
 
-solution40()
+solution36()
