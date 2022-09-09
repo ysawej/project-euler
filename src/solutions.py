@@ -147,30 +147,13 @@ def solution40():
     for d in [1,10, 100, 1000, 10_000, 100_000, 1000_000]:
         for i in range(1,len(boundaries)):
             if d <= boundaries[i] and d > boundaries[i-1]:
-                
                 c = (d - boundaries[i-1])
-                #print (i,boundaries[i-1] , n_dig_starts[i-1], n_dig_digs[i-1],  c // n_dig_digs[i-1], c%n_dig_digs[i-1])
                 v_d = n_dig_starts[i-1] + (c // n_dig_digs[i-1])
                 r = c%n_dig_digs[i-1]
-                #print(d, c,v_d, r)
-                """print("d={}, i={}, boundary={}, start={}, digit={}, c = {},v_d = {}, r={},c/dig={}, c mod dig={} ".format(
-                    d,
-                    i,
-                    boundaries[i-1], 
-                    n_dig_starts[i-1], 
-                    n_dig_digs[i-1],
-                    c,
-                    v_d,
-                    r,
-                    c // n_dig_digs[i-1], 
-                    c%n_dig_digs[i-1]))"""
-                if r == 0:
-                    
+                if r == 0:                    
                     print(v_d % 10,end=" ")
                     ans.append(v_d % 10)
                 else:
-                    #print("n_dig_starts[r], r",n_dig_starts[r], r)
-                    #print( "not last digit:",  ((v_d+1) // (n_dig_starts[n_dig_digs[i-1] - r]+1)) % 10,end=" ")
                     print(((v_d+1) // (n_dig_starts[n_dig_digs[i-1] - r]+1)) % 10,end="")
                     ans.append(((v_d+1) // (n_dig_starts[n_dig_digs[i-1] - r]+1)) % 10)
     print("\nans, product=",ans, np.prod(ans))
