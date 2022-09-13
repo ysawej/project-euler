@@ -172,3 +172,10 @@ def solution40():
     #print(boundaries)
 
 solution36()
+
+
+# Problem 41
+
+def permutation(arr):
+    signs = [0] * len(arr)
+    indices = [i+1 for i in range(len(arr))]
